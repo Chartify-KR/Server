@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 from . import local_settings
+import pymysql  
+
+pymysql.install_as_MySQLdb()
 
 SECRET_KEY = local_settings.SECRET_KEY
 DATABASES = local_settings.DATABASES

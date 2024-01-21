@@ -1,10 +1,19 @@
-FROM mysql:latest
+# Dockerfile
+FROM python:3.8
 
-# MySQL 설정
-ENV MYSQL_ROOT_PASSWORD=my-secret-pw
-ENV MYSQL_DATABASE=mydb
-ENV MYSQL_USER=myuser
-ENV MYSQL_PASSWORD=mypassword
+# 환경 변수 설정
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
-# 포트 설정 (기본 MySQL 포트는 3306)
-EXPOSE 3306
+# 작업 디렉토리 설정
+WORKDIR /app
+
+# 의존성 파일 복사 및 설치
+COPY ../auth/requirements.txt /app/
+RUN pip install -r requirements.txt
+
+# 프로젝트 파일 복사
+COPY ../auth /app/
+
+# 애플리케이션 실행
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
